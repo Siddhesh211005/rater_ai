@@ -1,0 +1,1407 @@
+{
+  "sheet": "Inception of Cover Rater",
+  "mode": "schedule",
+  "writeRules": {
+    "clearUnusedRows": true,
+    "emptyCellWrite": "blank",
+    "rowActivePolicy": "any-non-empty-cell"
+  },
+  "schedules": [
+    {
+      "key": "coverage_a",
+      "title": "Coverage A - Dwelling",
+      "rowStart": 9,
+      "rowEnd": 14,
+      "allowBlankRows": true,
+      "minActiveRows": 1,
+      "columns": [
+        {
+          "field": "location",
+          "column": "D",
+          "type": "dropdown",
+          "label": "Location #"
+        },
+        {
+          "field": "expiring_risk_limit",
+          "column": "E",
+          "type": "number",
+          "label": "Expiring Risk Limit"
+        }
+      ]
+    },
+    {
+      "key": "coverage_b",
+      "title": "Coverage B - Private Structures",
+      "rowStart": 16,
+      "rowEnd": 21,
+      "allowBlankRows": true,
+      "minActiveRows": 0,
+      "columns": [
+        {
+          "field": "location",
+          "column": "D",
+          "type": "dropdown",
+          "label": "Location #"
+        },
+        {
+          "field": "expiring_risk_limit",
+          "column": "E",
+          "type": "number",
+          "label": "Expiring Risk Limit"
+        }
+      ]
+    },
+    {
+      "key": "coverage_c_all",
+      "title": "Coverage C - Personal Property (All)",
+      "rowStart": 23,
+      "rowEnd": 28,
+      "allowBlankRows": true,
+      "minActiveRows": 0,
+      "columns": [
+        {
+          "field": "location",
+          "column": "D",
+          "type": "dropdown",
+          "label": "Location #"
+        },
+        {
+          "field": "expiring_risk_limit",
+          "column": "E",
+          "type": "number",
+          "label": "Expiring Risk Limit"
+        }
+      ]
+    },
+    {
+      "key": "coverage_c_jewelry",
+      "title": "Coverage C - Scheduled Jewelry",
+      "rowStart": 30,
+      "rowEnd": 32,
+      "allowBlankRows": true,
+      "minActiveRows": 0,
+      "columns": [
+        {
+          "field": "location",
+          "column": "D",
+          "type": "dropdown",
+          "label": "Location #"
+        },
+        {
+          "field": "expiring_risk_limit",
+          "column": "E",
+          "type": "number",
+          "label": "Expiring Risk Limit"
+        }
+      ]
+    },
+    {
+      "key": "coverage_d",
+      "title": "Coverage D - Loss of Use",
+      "rowStart": 34,
+      "rowEnd": 39,
+      "allowBlankRows": true,
+      "minActiveRows": 0,
+      "columns": [
+        {
+          "field": "location",
+          "column": "D",
+          "type": "dropdown",
+          "label": "Location #"
+        },
+        {
+          "field": "expiring_risk_limit",
+          "column": "E",
+          "type": "number",
+          "label": "Expiring Risk Limit"
+        }
+      ]
+    },
+    {
+      "key": "coverage_f",
+      "title": "Coverage F - Scheduled Farm Personal Property",
+      "rowStart": 42,
+      "rowEnd": 61,
+      "allowBlankRows": true,
+      "minActiveRows": 0,
+      "columns": [
+        {
+          "field": "location",
+          "column": "D",
+          "type": "dropdown",
+          "label": "Location #"
+        },
+        {
+          "field": "expiring_risk_limit",
+          "column": "E",
+          "type": "number",
+          "label": "Expiring Risk Limit"
+        }
+      ]
+    },
+    {
+      "key": "coverage_g",
+      "title": "Coverage G - Farm Outbuildings and Structures",
+      "rowStart": 63,
+      "rowEnd": 82,
+      "allowBlankRows": true,
+      "minActiveRows": 0,
+      "columns": [
+        {
+          "field": "location",
+          "column": "D",
+          "type": "dropdown",
+          "label": "Location #"
+        },
+        {
+          "field": "expiring_risk_limit",
+          "column": "E",
+          "type": "number",
+          "label": "Expiring Risk Limit"
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "field": "insured_b1",
+      "cell": "B1",
+      "type": "text",
+      "label": "INSURED",
+      "group": "Policy Info"
+    },
+    {
+      "field": "insured_address_b2",
+      "cell": "B2",
+      "type": "text",
+      "label": "INSURED ADDRESS",
+      "group": "Policy Info"
+    },
+    {
+      "field": "state_location_of_farm_b3",
+      "cell": "B3",
+      "type": "text",
+      "label": "STATE - LOCATION OF FARM",
+      "group": "Policy Info",
+      "default": "AR"
+    },
+    {
+      "field": "county_location_of_farm_b4",
+      "cell": "B4",
+      "type": "text",
+      "label": "COUNTY - LOCATION OF FARM",
+      "group": "Policy Info"
+    },
+    {
+      "field": "proposed_effective_date_b5",
+      "cell": "B5",
+      "type": "text",
+      "label": "PROPOSED EFFECTIVE DATE",
+      "group": "Policy Info"
+    },
+    {
+      "field": "proposed_expiry_date_b6",
+      "cell": "B6",
+      "type": "text",
+      "label": "PROPOSED EXPIRY DATE",
+      "group": "Policy Info"
+    },
+    {
+      "field": "f_1_location_d9",
+      "cell": "D9",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_location_d10",
+      "cell": "D10",
+      "type": "dropdown",
+      "label": "#2 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_location_d11",
+      "cell": "D11",
+      "type": "dropdown",
+      "label": "#3 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_4_location_d12",
+      "cell": "D12",
+      "type": "dropdown",
+      "label": "#4 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_5_location_d13",
+      "cell": "D13",
+      "type": "dropdown",
+      "label": "#5 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_6_location_d14",
+      "cell": "D14",
+      "type": "dropdown",
+      "label": "#6 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_1_location_d16",
+      "cell": "D16",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_location_d17",
+      "cell": "D17",
+      "type": "dropdown",
+      "label": "#2 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_location_d18",
+      "cell": "D18",
+      "type": "dropdown",
+      "label": "#3 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_4_location_d19",
+      "cell": "D19",
+      "type": "dropdown",
+      "label": "#4 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_5_location_d20",
+      "cell": "D20",
+      "type": "dropdown",
+      "label": "#5 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_6_location_d21",
+      "cell": "D21",
+      "type": "dropdown",
+      "label": "#6 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_1_location_d23",
+      "cell": "D23",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_location_d24",
+      "cell": "D24",
+      "type": "dropdown",
+      "label": "#2 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_location_d25",
+      "cell": "D25",
+      "type": "dropdown",
+      "label": "#3 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_4_location_d26",
+      "cell": "D26",
+      "type": "dropdown",
+      "label": "#4 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_5_location_d27",
+      "cell": "D27",
+      "type": "dropdown",
+      "label": "#5 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_6_location_d28",
+      "cell": "D28",
+      "type": "dropdown",
+      "label": "#6 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "coverage_c_total_location_d29",
+      "cell": "D29",
+      "type": "dropdown",
+      "label": "Coverage C Total (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6",
+        "Total Acreage"
+      ]
+    },
+    {
+      "field": "f_1_location_d30",
+      "cell": "D30",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_location_d31",
+      "cell": "D31",
+      "type": "dropdown",
+      "label": "#2 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_location_d32",
+      "cell": "D32",
+      "type": "dropdown",
+      "label": "#3 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_1_location_d34",
+      "cell": "D34",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_location_d35",
+      "cell": "D35",
+      "type": "dropdown",
+      "label": "#2 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_location_d36",
+      "cell": "D36",
+      "type": "dropdown",
+      "label": "#3 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_4_location_d37",
+      "cell": "D37",
+      "type": "dropdown",
+      "label": "#4 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_5_location_d38",
+      "cell": "D38",
+      "type": "dropdown",
+      "label": "#5 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_6_location_d39",
+      "cell": "D39",
+      "type": "dropdown",
+      "label": "#6 (Location #)",
+      "group": "Coverage A-D",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "misc_small_tools_equip_supplies_location_d41",
+      "cell": "D41",
+      "type": "dropdown",
+      "label": "MISC SMALL TOOLS, EQUIP, SUPPLIES (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_1_location_d42",
+      "cell": "D42",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_location_d43",
+      "cell": "D43",
+      "type": "dropdown",
+      "label": "#2 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_location_d44",
+      "cell": "D44",
+      "type": "dropdown",
+      "label": "#3 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_4_location_d45",
+      "cell": "D45",
+      "type": "dropdown",
+      "label": "#4 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_5_location_d46",
+      "cell": "D46",
+      "type": "dropdown",
+      "label": "#5 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_6_location_d47",
+      "cell": "D47",
+      "type": "dropdown",
+      "label": "#6 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_7_location_d48",
+      "cell": "D48",
+      "type": "dropdown",
+      "label": "#7 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_8_location_d49",
+      "cell": "D49",
+      "type": "dropdown",
+      "label": "#8 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_9_location_d50",
+      "cell": "D50",
+      "type": "dropdown",
+      "label": "#9 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_10_location_d51",
+      "cell": "D51",
+      "type": "dropdown",
+      "label": "#10 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_11_location_d52",
+      "cell": "D52",
+      "type": "dropdown",
+      "label": "#11 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_12_location_d53",
+      "cell": "D53",
+      "type": "dropdown",
+      "label": "#12 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_13_location_d54",
+      "cell": "D54",
+      "type": "dropdown",
+      "label": "#13 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_14_location_d55",
+      "cell": "D55",
+      "type": "dropdown",
+      "label": "#14 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_15_location_d56",
+      "cell": "D56",
+      "type": "dropdown",
+      "label": "#15 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_16_location_d57",
+      "cell": "D57",
+      "type": "dropdown",
+      "label": "#16 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_17_location_d58",
+      "cell": "D58",
+      "type": "dropdown",
+      "label": "#17 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_18_location_d59",
+      "cell": "D59",
+      "type": "dropdown",
+      "label": "#18 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_19_location_d60",
+      "cell": "D60",
+      "type": "dropdown",
+      "label": "#19 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_20_location_d61",
+      "cell": "D61",
+      "type": "dropdown",
+      "label": "#20 (Location #)",
+      "group": "Coverage E-F",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_1_location_d63",
+      "cell": "D63",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_location_d64",
+      "cell": "D64",
+      "type": "dropdown",
+      "label": "#2 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_2_risk_limit_e64",
+      "cell": "E64",
+      "type": "number",
+      "label": "#2 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_3_location_d65",
+      "cell": "D65",
+      "type": "dropdown",
+      "label": "#3 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_risk_limit_e65",
+      "cell": "E65",
+      "type": "number",
+      "label": "#3 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_4_location_d66",
+      "cell": "D66",
+      "type": "dropdown",
+      "label": "#4 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_4_risk_limit_e66",
+      "cell": "E66",
+      "type": "number",
+      "label": "#4 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_5_location_d67",
+      "cell": "D67",
+      "type": "dropdown",
+      "label": "#5 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_5_risk_limit_e67",
+      "cell": "E67",
+      "type": "number",
+      "label": "#5 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_6_location_d68",
+      "cell": "D68",
+      "type": "dropdown",
+      "label": "#6 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_6_risk_limit_e68",
+      "cell": "E68",
+      "type": "number",
+      "label": "#6 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_7_location_d69",
+      "cell": "D69",
+      "type": "dropdown",
+      "label": "#7 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_7_risk_limit_e69",
+      "cell": "E69",
+      "type": "number",
+      "label": "#7 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_8_location_d70",
+      "cell": "D70",
+      "type": "dropdown",
+      "label": "#8 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_8_risk_limit_e70",
+      "cell": "E70",
+      "type": "number",
+      "label": "#8 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_9_location_d71",
+      "cell": "D71",
+      "type": "dropdown",
+      "label": "#9 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_9_risk_limit_e71",
+      "cell": "E71",
+      "type": "number",
+      "label": "#9 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_10_location_d72",
+      "cell": "D72",
+      "type": "dropdown",
+      "label": "#10 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_10_risk_limit_e72",
+      "cell": "E72",
+      "type": "number",
+      "label": "#10 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_11_location_d73",
+      "cell": "D73",
+      "type": "dropdown",
+      "label": "#11 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_11_risk_limit_e73",
+      "cell": "E73",
+      "type": "number",
+      "label": "#11 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_12_location_d74",
+      "cell": "D74",
+      "type": "dropdown",
+      "label": "#12 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_12_risk_limit_e74",
+      "cell": "E74",
+      "type": "number",
+      "label": "#12 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_13_location_d75",
+      "cell": "D75",
+      "type": "dropdown",
+      "label": "#13 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_13_risk_limit_e75",
+      "cell": "E75",
+      "type": "number",
+      "label": "#13 (Risk Limit)",
+      "group": "Coverage G",
+      "default": 0
+    },
+    {
+      "field": "f_14_location_d76",
+      "cell": "D76",
+      "type": "dropdown",
+      "label": "#14 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_15_location_d77",
+      "cell": "D77",
+      "type": "dropdown",
+      "label": "#15 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_16_location_d78",
+      "cell": "D78",
+      "type": "dropdown",
+      "label": "#16 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_17_location_d79",
+      "cell": "D79",
+      "type": "dropdown",
+      "label": "#17 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_18_location_d80",
+      "cell": "D80",
+      "type": "dropdown",
+      "label": "#18 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_19_location_d81",
+      "cell": "D81",
+      "type": "dropdown",
+      "label": "#19 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_20_location_d82",
+      "cell": "D82",
+      "type": "dropdown",
+      "label": "#20 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_1_location_d87",
+      "cell": "D87",
+      "type": "dropdown",
+      "label": "#1 (Location #)",
+      "group": "Coverage G",
+      "options": [
+        "Loc #1",
+        "Loc #2",
+        "Loc #3",
+        "Loc #4",
+        "Loc #5",
+        "Loc #6"
+      ]
+    },
+    {
+      "field": "f_3_b104",
+      "cell": "B104",
+      "type": "number",
+      "label": "#3",
+      "group": "Taxes and Totals",
+      "default": 0
+    },
+    {
+      "field": "f_4_b105",
+      "cell": "B105",
+      "type": "number",
+      "label": "#4",
+      "group": "Taxes and Totals",
+      "default": 0
+    },
+    {
+      "field": "location_b108",
+      "cell": "B108",
+      "type": "text",
+      "label": "Location",
+      "group": "Taxes and Totals",
+      "default": "Address"
+    }
+  ],
+  "outputs": [
+    {
+      "field": "total_premium",
+      "cell": "M100",
+      "type": "number",
+      "label": "Total Premium",
+      "group": "Results",
+      "primary": false
+    },
+    {
+      "field": "total_premium_slt",
+      "cell": "M109",
+      "type": "number",
+      "label": "Total Premium + SLT",
+      "group": "Results",
+      "primary": true
+    },
+    {
+      "field": "total_premium_slt_component",
+      "cell": "M102",
+      "type": "number",
+      "label": "Total Premium SLT",
+      "group": "Results",
+      "primary": false
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+{
+  "sheet": "Inputs",
+  "inputs": [
+    {
+      "field": "policy_number",
+      "cell": "Inputs!B4",
+      "type": "text",
+      "label": "Policy Number",
+      "group": "Risk Identification",
+      "default": "POL-2025-001"
+    },
+    {
+      "field": "insured_name",
+      "cell": "Inputs!B5",
+      "type": "text",
+      "label": "Insured Name",
+      "group": "Risk Identification",
+      "default": "Sample Insured LLC"
+    },
+    {
+      "field": "effective_date",
+      "cell": "Inputs!B6",
+      "type": "text",
+      "label": "Effective Date",
+      "group": "Risk Identification",
+      "default": "2025-01-01"
+    },
+    {
+      "field": "expiration_date",
+      "cell": "Inputs!B7",
+      "type": "text",
+      "label": "Expiration Date",
+      "group": "Risk Identification",
+      "default": "2026-01-01"
+    },
+    {
+      "field": "state",
+      "cell": "Inputs!B8",
+      "type": "text",
+      "label": "State",
+      "group": "Risk Identification",
+      "default": "FL"
+    },
+    {
+      "field": "lob",
+      "cell": "Inputs!B9",
+      "type": "text",
+      "label": "Line of Business",
+      "group": "Risk Identification",
+      "default": "Commercial Property"
+    },
+    {
+      "field": "building_value",
+      "cell": "Inputs!B12",
+      "type": "number",
+      "label": "Building Value ($)",
+      "group": "Property Characteristics",
+      "default": 2500000
+    },
+    {
+      "field": "contents_value",
+      "cell": "Inputs!B13",
+      "type": "number",
+      "label": "Contents Value ($)",
+      "group": "Property Characteristics",
+      "default": 500000
+    },
+    {
+      "field": "bi_limit",
+      "cell": "Inputs!B14",
+      "type": "number",
+      "label": "Business Income Limit ($)",
+      "group": "Property Characteristics",
+      "default": 250000
+    },
+    {
+      "field": "year_built",
+      "cell": "Inputs!B15",
+      "type": "number",
+      "label": "Year Built",
+      "group": "Property Characteristics",
+      "default": 1995
+    },
+    {
+      "field": "square_footage",
+      "cell": "Inputs!B16",
+      "type": "number",
+      "label": "Square Footage",
+      "group": "Property Characteristics",
+      "default": 12000
+    },
+    {
+      "field": "stories",
+      "cell": "Inputs!B17",
+      "type": "number",
+      "label": "Number of Stories",
+      "group": "Property Characteristics",
+      "default": 2
+    },
+    {
+      "field": "construction_class",
+      "cell": "Inputs!B18",
+      "type": "dropdown",
+      "label": "Construction Class (1-6)",
+      "group": "Property Characteristics",
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "default": 2
+    },
+    {
+      "field": "occupancy_code",
+      "cell": "Inputs!B19",
+      "type": "text",
+      "label": "Occupancy Code",
+      "group": "Property Characteristics",
+      "default": "04"
+    },
+    {
+      "field": "protection_class",
+      "cell": "Inputs!B20",
+      "type": "dropdown",
+      "label": "Protection Class (1-10)",
+      "group": "Property Characteristics",
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "default": 5
+    },
+    {
+      "field": "sprinklered",
+      "cell": "Inputs!B21",
+      "type": "dropdown",
+      "label": "Sprinklered (1=Yes)",
+      "group": "Modifiers",
+      "options": [
+        1,
+        0
+      ],
+      "default": 1
+    },
+    {
+      "field": "deductible",
+      "cell": "Inputs!B24",
+      "type": "dropdown",
+      "label": "Deductible ($)",
+      "group": "Modifiers",
+      "options": [
+        1000,
+        2500,
+        5000,
+        10000,
+        25000,
+        50000
+      ],
+      "default": 5000
+    },
+    {
+      "field": "wind_exclusion",
+      "cell": "Inputs!B25",
+      "type": "dropdown",
+      "label": "Wind/Hail Exclusion",
+      "group": "Modifiers",
+      "options": [
+        1,
+        0
+      ],
+      "default": 0
+    },
+    {
+      "field": "alarm_credit",
+      "cell": "Inputs!B26",
+      "type": "dropdown",
+      "label": "Alarm Credit (1=Yes)",
+      "group": "Modifiers",
+      "options": [
+        1,
+        0
+      ],
+      "default": 1
+    },
+    {
+      "field": "prior_losses",
+      "cell": "Inputs!B27",
+      "type": "number",
+      "label": "Prior Losses",
+      "group": "Modifiers",
+      "default": 1
+    },
+    {
+      "field": "account_mod",
+      "cell": "Inputs!B28",
+      "type": "number",
+      "label": "Account Credit/Debit (%)",
+      "group": "Modifiers",
+      "default": 0.05
+    }
+  ],
+  "outputs": [
+    {
+      "field": "building_premium",
+      "cell": "Outputs!B4",
+      "type": "number",
+      "label": "Building Premium",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "contents_premium",
+      "cell": "Outputs!B5",
+      "type": "number",
+      "label": "Contents Premium",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "business_income_premium",
+      "cell": "Outputs!B6",
+      "type": "number",
+      "label": "Business Income Premium",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "subtotal_premium",
+      "cell": "Outputs!B7",
+      "type": "number",
+      "label": "Subtotal Premium",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "deductible_credit",
+      "cell": "Outputs!B8",
+      "type": "number",
+      "label": "Deductible Credit ($)",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "account_mod_adj",
+      "cell": "Outputs!B9",
+      "type": "number",
+      "label": "Account Mod Adjustment",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "premium",
+      "cell": "Outputs!B10",
+      "type": "number",
+      "label": "TOTAL ANNUAL PREMIUM",
+      "group": "General",
+      "primary": true
+    },
+    {
+      "field": "base_building_rate",
+      "cell": "Outputs!B14",
+      "type": "number",
+      "label": "Base Building Rate (/$1k)",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "protection_class_factor",
+      "cell": "Outputs!B15",
+      "type": "number",
+      "label": "Protection Class Factor",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "age_load_factor",
+      "cell": "Outputs!B16",
+      "type": "number",
+      "label": "Age Load Factor",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "deductible_factor",
+      "cell": "Outputs!B17",
+      "type": "number",
+      "label": "Deductible Factor",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "combined_rate_modifier",
+      "cell": "Outputs!B18",
+      "type": "number",
+      "label": "Combined Rate Modifier",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "effective_rate_per_1k",
+      "cell": "Outputs!B19",
+      "type": "number",
+      "label": "Effective Rate Per $1k TIV",
+      "group": "General",
+      "primary": false
+    },
+    {
+      "field": "tiv",
+      "cell": "Outputs!B20",
+      "type": "number",
+      "label": "TIV",
+      "group": "General",
+      "primary": false
+    }
+  ]
+}
