@@ -28,19 +28,7 @@ The Client panel is used to execute approved raters:
 4. Persist execution metadata into `records/`.
 
 ## End-to-End Flow
-```mermaid
-flowchart LR
-A[Admin uploads workbook] --> B[Backend parses _Schema sheet]
-B --> C[Admin UI generated from config]
-C --> D[Test calculate]
-D --> E[Save to raters/templates]
-E --> F[Client selects rater/template]
-F --> G[Warm Excel worker in RAM]
-G --> H[Client submit inputs]
-H --> I[Excel calculate outputs]
-I --> J[Return outputs]
-I --> K[Save record snapshot]
-```
+The end-to-end flow involves an Admin uploading a workbook, the system parsing the `_Schema` sheet to generate an Admin UI, the Admin testing and saving the model to `raters/` or `templates/`, and finally the Client selecting the model, submitting inputs, calculating outputs natively in Excel, and viewing the results with a saved record snapshot.
 
 ## Excel `_Schema` Sheet Format
 Each workbook must include a sheet named `_Schema`. The parser expects columns A-H:
