@@ -1,0 +1,31 @@
+"cogitate rater/backend/excel_worker.py"
+  h_f1dedd55b576c0 152
+  h_f1dedd55b576c0 121,149
+"cogitate rater/backend/schema_parser.py"
+  h_f1dedd55b576c0 2,11-12,14-15,17-21,23-24,28,30-35,37-158,162-164,166-171,184,277-280
+  h_f1dedd55b576c0 1,13,22,25,159-161,355
+"cogitate rater/backend/main.py"
+  h_f1dedd55b576c0 7,10,24,36-57,168-180,238,518-520,630-631,644-655,660-661,663-664,675-681,686
+  h_f1dedd55b576c0 700
+"cogitate rater/web-next/src/components/tester/DynamicForm.tsx"
+  h_f1dedd55b576c0 149-158
+  h_f1dedd55b576c0 355
+"cogitate rater/web-next/src/components/tester/OutputPanel.tsx"
+  h_f1dedd55b576c0 11-20,22-26
+  h_f1dedd55b576c0 21,79
+"cogitate rater/README.md"
+  h_f1dedd55b576c0 114,128
+"cogitate rater/web-next/src/app/admin/page.tsx"
+  h_f1dedd55b576c0 116
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "3c5d7ae1b77e21025c1f477a7837fe9e0dc4cc90",
+  "prompts": {},
+  "humans": {
+    "h_f1dedd55b576c0": {
+      "author": "Siddhesh Rane <srane@cogitate.com>"
+    }
+  }
+}
