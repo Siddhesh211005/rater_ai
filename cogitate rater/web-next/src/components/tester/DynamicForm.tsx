@@ -146,6 +146,16 @@ export function DynamicForm({ config, onInputsChange }: DynamicFormProps) {
     onInputsChange(collectAllInputs());
   };
 
+  // Synchronize the default DOM values with the parent state immediately upon load
+  useEffect(() => {
+    // A small timeout ensures the DOM has fully painted the default values before we collect them
+    const timer = setTimeout(() => {
+      onInputsChange(collectAllInputs());
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [config]);
+
   return (
     <div className="space-y-6">
       {isScheduleMode && (

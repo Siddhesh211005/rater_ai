@@ -113,6 +113,7 @@ export default function AdminPage() {
     setSuccess(null);
 
     try {
+      console.log("PAYLOAD SENT:", { upload_id: uploadId, inputs: testInputs });
       const response = await apiPost<AdminCalculateResponse>(
         "/api/admin/test-calculate",
         {

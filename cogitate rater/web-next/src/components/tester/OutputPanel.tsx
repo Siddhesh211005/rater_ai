@@ -8,9 +8,23 @@ interface OutputPanelProps {
 }
 
 export function OutputPanel({ config, outputs }: OutputPanelProps) {
-  if (!config) return null;
+  // 1. STRICT GUARD: If there is no config, or the outputs array is missing/empty, render nothing yet.
+  if (!config || !config.outputs || config.outputs.length === 0) {
+    return null; 
+  }
 
-  const primary = config.outputs.find((o) => o.primary) || config.outputs[0];
+  // 2. Safely find the primary field
+  let primary = config.outputs.find((o) => o.field === "POL-1|FINAL_PREMIUM|FINAL_PREMIUM");
+  
+  if (!primary) {
+    primary = config.outputs.find((o) => o.primary) || config.outputs[0];
+  }
+  
+  // 3. SECONDARY GUARD: If for some reason it's STILL undefined, safely bail out
+  if (!primary) {
+    return null;
+  }
+
   const secondary = config.outputs.filter((o) => o !== primary);
 
   const primaryValue = outputs?.[primary.field];

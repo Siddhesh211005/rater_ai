@@ -111,7 +111,7 @@ python -m venv .venv
 .\.venv\Scripts\activate
 
 pip install -r requirements.txt
-uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+uvicorn main:app --host 127.0.0.1 --port 8001 --reload
 ```
 
 Backend URL: `http://127.0.0.1:8000`
@@ -125,7 +125,7 @@ npm install
 npm run dev
 ```
 
-Frontend URL: `http://localhost:3000`
+Frontend URL: `http://localhost:3001`
 
 ### 4) Use the app
 1. Open `http://localhost:3000/admin` and upload an Excel file with `_Schema`.

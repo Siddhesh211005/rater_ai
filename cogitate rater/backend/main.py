@@ -4,8 +4,10 @@
 import json
 import uuid
 import shutil
+import time
 from pathlib import Path
 from typing import Any
+from datetime import datetime
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Request, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,6 +21,7 @@ from config import (
     UPLOADS_DIR,
     RATERS_DIR,
     TEMPLATES_DIR,
+    RECORDS_DIR,
     WARM_START_ENABLED,
     WARM_SESSION_TTL_SEC,
     WARM_FAIL_OPEN,
@@ -30,6 +33,28 @@ app = FastAPI(
     version="2.0.0",
 )
 
+OUTPUTS_DIR = Path("outputs")
+OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+
+def _log_calculation_response(endpoint_name: str, inputs: dict, outputs: dict):
+    """Saves a lightweight JSON log of the calculation for later analysis."""
+    try:
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S_%f")
+        file_name = f"{endpoint_name}_{timestamp}.json"
+        log_path = OUTPUTS_DIR / file_name
+        
+        payload = {
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "endpoint": endpoint_name,
+            "inputs": inputs,
+            "outputs": outputs
+        }
+        
+        with open(log_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        print(f"Failed to log output response: {e}")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -39,10 +64,7 @@ app.add_middleware(
 
 
 def _save_execution_record(template_path: Path, config: dict, meta_extra: dict):
-    import time
-    from datetime import datetime
     req_id = f"req-{uuid.uuid4().hex[:8]}"
-    from config import RECORDS_DIR
     record_dir = RECORDS_DIR / req_id
     record_dir.mkdir(parents=True, exist_ok=True)
     
@@ -123,13 +145,9 @@ def root_redirect():
     return RedirectResponse(url="/docs")
 
 
-
 # ===================================================================
 # RECORDS - Immutable History for Both Admin & Client
 # ===================================================================
-from config import RECORDS_DIR
-import time
-from datetime import datetime
 
 @app.get("/api/records")
 def api_list_records():
@@ -146,6 +164,19 @@ def api_list_records():
             
     records.sort(key=lambda x: x.get("created_ts", 0), reverse=True)
     return records
+
+@app.delete("/api/raters/{slug}")
+async def api_delete_rater(slug: str):
+    """Deletes a saved rater configuration from the backend."""
+    rater_dir = RATERS_DIR / slug
+    if not rater_dir.exists():
+        raise HTTPException(status_code=404, detail=f"Rater '{slug}' not found")
+    
+    try:
+        shutil.rmtree(rater_dir)
+        return {"status": "success", "message": f"Rater '{slug}' successfully deleted"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to delete rater: {e}")
 
 @app.post("/api/admin/upload-record")
 async def api_upload_record(file: UploadFile = File(...)):
@@ -204,6 +235,7 @@ async def api_record_calculate(req_id: str, request: Request):
 
     return {"status": "success", "outputs": results}
 
+
 # ===================================================================
 # HEALTH & STATUS
 # ===================================================================
@@ -232,7 +264,6 @@ def api_rater_config(slug: str, background_tasks: BackgroundTasks):
     try:
         config = registry.load_config("raters", slug)
         template_path = registry.get_template_path("raters", slug)
-        # Pre-warm the COM instances in the background
         background_tasks.add_task(warm_sessions.get_template_worker, template_path, config)
         return config
     except FileNotFoundError as e:
@@ -306,7 +337,6 @@ def api_template_config(name: str, background_tasks: BackgroundTasks):
     try:
         config = registry.load_config("templates", name)
         template_path = registry.get_template_path("templates", name)
-        # Pre-warm the COM instances in the background
         background_tasks.add_task(warm_sessions.get_template_worker, template_path, config)
         return config
     except FileNotFoundError as e:
@@ -372,7 +402,6 @@ async def api_template_download(name: str, request: Request):
 
 @app.post("/api/admin/upload")
 async def api_admin_upload(background_tasks: BackgroundTasks, file: UploadFile = File(...)):
-    """Upload Excel, parse _Schema sheet, return config preview + upload_id."""
     if not file.filename.endswith((".xlsx", ".xls")):
         raise HTTPException(status_code=400, detail="Only .xlsx files are supported")
 
@@ -445,7 +474,6 @@ def api_admin_warm_status(upload_id: str):
 
 @app.post("/api/admin/test-calculate")
 async def api_admin_test_calculate(request: Request):
-    """Test calculate using a temporarily uploaded file + config."""
     warm_sessions.expire_old_sessions(WARM_SESSION_TTL_SEC)
 
     payload = await request.json()
@@ -487,6 +515,9 @@ async def api_admin_test_calculate(request: Request):
     finally:
         warm_sessions.finish_execution(upload_id, "test-calculate")
 
+    # NEW: Log the response to the outputs folder
+    _log_calculation_response("test_calculate", inputs, results)
+
     print(
         f"[admin/test-calculate] upload_id={upload_id} warm_used={meta.get('warm_used')} "
         f"warm_state={meta.get('warm_state')} total_ms={meta.get('timings', {}).get('total_ms')}"
@@ -503,7 +534,6 @@ async def api_admin_test_calculate(request: Request):
 
 @app.post("/api/admin/test-download")
 async def api_admin_test_download(request: Request):
-    """Test calculate and return the calculated Excel file for verification."""
     warm_sessions.expire_old_sessions(WARM_SESSION_TTL_SEC)
 
     payload = await request.json()
@@ -595,17 +625,11 @@ async def api_admin_save(request: Request):
         warm_sessions.delete_session(upload_id)
         raise HTTPException(status_code=404, detail="Upload not found — please re-upload the file")
 
-    # Create destination directory
     base_dir = RATERS_DIR if source == "raters" else TEMPLATES_DIR
     rater_dir = base_dir / slug
-    if rater_dir.exists():
-        raise HTTPException(status_code=409, detail=f"Rater '{slug}' already exists in {source}")
-
+    
+    # We no longer throw a 409 error here so we can increment versions on overwrite
     rater_dir.mkdir(parents=True, exist_ok=True)
-
-    # Release file lock by deleting the active warmup COM session
-    warm_sessions.delete_session(upload_id)
-    time.sleep(1.5)
 
     try:
         # Copy template
@@ -617,20 +641,30 @@ async def api_admin_save(request: Request):
             encoding="utf-8",
         )
 
-        # Write meta
+        # Write meta with versioning
+        version = 1
+        meta_path = rater_dir / "meta.json"
+        
+        # If saving over an existing rater, increment the version
+        if meta_path.exists():
+            try:
+                old_meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                version = old_meta.get("version", 0) + 1
+            except Exception:
+                pass
+
         meta = {
             "name": name or slug,
             "slug": slug,
             "description": description,
+            "version": version,
+            "last_updated": datetime.utcnow().isoformat() + "Z"
         }
-        (rater_dir / "meta.json").write_text(
+        
+        meta_path.write_text(
             json.dumps(meta, indent=2, ensure_ascii=False),
             encoding="utf-8",
         )
-
-        # Clean up temp upload
-        upload_path.unlink(missing_ok=True)
-        warm_sessions.delete_session(upload_id)
 
     except Exception as e:
         # Rollback on failure
@@ -638,11 +672,18 @@ async def api_admin_save(request: Request):
             shutil.rmtree(rater_dir, ignore_errors=True)
         raise HTTPException(status_code=500, detail=f"Failed to save rater: {e}")
 
+    # --- SAFELY CLEAN UP TEMP FILES OUTSIDE THE ROLLBACK BLOCK ---
+    try:
+        warm_sessions.delete_session(upload_id)
+        upload_path.unlink(missing_ok=True)
+    except Exception:
+        pass # If Excel is still locking the temp file, just leave it in the uploads folder.
+
     return {
         "status": "success",
         "slug": slug,
         "source": source,
-        "message": f"Rater '{name or slug}' saved to {source}/{slug}/",
+        "message": f"Rater '{name or slug}' (v{version}) saved to {source}/{slug}/",
     }
 
 
@@ -657,5 +698,3 @@ def health():
         "raters_count": len(registry.list_raters()),
         "templates_count": len(registry.list_templates()),
     }
-
-

@@ -118,6 +118,7 @@ class ExcelWorker(threading.Thread):
             return self.wb.Sheets(default_sheet_name).Range(cell_ref).Value
 
     def _do_calculation(self, input_data: dict[str, Any], keep_file: bool = False) -> tuple[dict[str, Any], dict[str, float], str]:
+        print(f"PAYLOAD RECEIVED: {input_data}")
         timings = {
             "copy_ms": 0.0,
             "write_ms": 0.0,
@@ -146,8 +147,9 @@ class ExcelWorker(threading.Thread):
         timings["write_ms"] = round((time.perf_counter() - write_start) * 1000, 3)
 
         # CALC
+        # CALC
         calc_start = time.perf_counter()
-        self.app.Calculate()
+        self.app.CalculateFullRebuild()
         timings["calc_ms"] = round((time.perf_counter() - calc_start) * 1000, 3)
 
         # READ
