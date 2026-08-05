@@ -53,6 +53,8 @@ class ExcelWorker(threading.Thread):
             )
             self.app.Calculation = -4135
             self.sheet_name = self.config.get('sheet', 'Sheet1')
+            
+            # Map generation for our Dual-Write Strategy
             self.input_map = {
                 inp["field"]: inp["cell"]
                 for inp in self.config.get("inputs", [])
@@ -63,6 +65,13 @@ class ExcelWorker(threading.Thread):
                 for inp in self.config.get("inputs", [])
                 if inp.get("field")
             }
+            # Deep Injection mapping for original disconnected calculation sheets
+            self.original_source_map = {
+                inp["field"]: inp["original_source"]
+                for inp in self.config.get("inputs", [])
+                if inp.get("field") and inp.get("original_source")
+            }
+            
             self.output_map = {
                 out["field"]: out["cell"]
                 for out in self.config.get("outputs", [])
@@ -139,14 +148,22 @@ class ExcelWorker(threading.Thread):
         for field, value in input_data.items():
             if field in {"schedules", "_schedules"}:
                 continue
+            
             cell_ref = self.input_map.get(field)
             if cell_ref and cell_ref not in schedule_cells:
                 val_type = self.input_type_map.get(field, "text")
-                self._write_cell(self.sheet_name, cell_ref, _coerce_by_type(value, val_type))
+                coerced_val = _coerce_by_type(value, val_type)
+                
+                # 1. Primary Write (Safeguards standard linked inputs)
+                self._write_cell(self.sheet_name, cell_ref, coerced_val)
+                
+                # 2. Deep Injection Write (Fixes disconnected logic on target calculation sheets)
+                orig_source_ref = self.original_source_map.get(field)
+                if orig_source_ref:
+                    self._write_cell(self.sheet_name, orig_source_ref, coerced_val)
 
         timings["write_ms"] = round((time.perf_counter() - write_start) * 1000, 3)
 
-        # CALC
         # CALC
         calc_start = time.perf_counter()
         self.app.CalculateFullRebuild()
@@ -204,6 +221,3 @@ class ExcelWorker(threading.Thread):
     def shutdown(self):
         self.request_queue.put({"type": "shutdown"})
         self.join(timeout=5.0)
-
-
-

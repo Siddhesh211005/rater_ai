@@ -69,31 +69,36 @@ premium,H20,number,Premium,output,Results,,
 
 ## Repository Structure
 ```text
-cogitate-code-review/
-├── README.md
-└── cogitate rater/
-    ├── backend/
-    │   ├── main.py            # API routes (admin, raters, templates, records)
-    │   ├── schema_parser.py   # Parses _Schema sheet to config
-    │   ├── engine.py          # Calculation orchestration
-    │   ├── excel_worker.py    # Excel COM worker lifecycle
-    │   ├── warm_sessions.py   # Worker/session warm management
-    │   └── requirements.txt   # Backend dependencies
-    ├── web-next/
-    │   ├── src/app/admin/     # Admin panel pages
-    │   ├── src/app/tester/    # Client/tester panel pages
-    │   └── src/components/    # Shared UI components
-    ├── raters/                # Approved saved raters
-    ├── templates/             # Base templates
-    ├── uploads/               # Temporary uploaded files
-    └── records/               # Immutable calculation snapshots
+cogitate rater/
+├── Dockerfile             # Windows Server Core Docker container configuration
+├── docker-compose.yml     # Docker service orchestration
+├── configuration.xml      # Microsoft Office Deployment Tool XML configuration
+├── setup.exe              # Microsoft Office Deployment Tool setup executable
+├── requirements.txt       # Root Python dependencies
+├── backend/
+│   ├── main.py            # FastAPI entrypoint (routes for admin, raters, templates, records)
+│   ├── schema_parser.py   # Parses Excel _Schema sheet into JSON configuration
+│   ├── engine.py          # Calculation engine orchestration
+│   ├── excel_worker.py    # Native Excel COM worker lifecycle (win32com)
+│   ├── warm_sessions.py   # Active worker session pool management
+│   ├── registry.py        # Storage registry for raters & templates
+│   ├── config.py          # Application configuration
+│   └── requirements.txt   # Backend dependencies
+├── web-next/
+│   ├── src/app/admin/     # Admin panel pages (upload & test models)
+│   ├── src/app/tester/    # Client panel pages (run calculations)
+│   └── src/components/    # UI components
+├── raters/                # Saved production raters
+├── templates/             # Base template raters
+├── uploads/               # Temporary uploaded workbook sessions
+└── records/               # Immutable calculation history logs
 ```
 
 ## Run the System (Detailed)
 
 ### Prerequisites
 - Windows 10/11 (or Windows Server)
-- Microsoft Excel installed locally
+- Microsoft Excel installed locally (for local non-Docker mode)
 - Python 3.9 to 3.11
 - Node.js 18+
 
@@ -111,11 +116,11 @@ python -m venv .venv
 .\.venv\Scripts\activate
 
 pip install -r requirements.txt
-uvicorn main:app --host 127.0.0.1 --port 8001 --reload
+uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-Backend URL: `http://127.0.0.1:8000`
-Swagger docs: `http://127.0.0.1:8000/docs`
+Backend URL: `http://127.0.0.1:8000`  
+Swagger docs: `http://127.0.0.1:8000/docs`  
 
 ### 3) Start frontend (Terminal 2)
 ```powershell
@@ -125,7 +130,8 @@ npm install
 npm run dev
 ```
 
-Frontend URL: `http://localhost:3001`
+Frontend URL: `http://localhost:3000`  
+
 
 ### 4) Use the app
 1. Open `http://localhost:3000/admin` and upload an Excel file with `_Schema`.
@@ -143,6 +149,34 @@ Frontend URL: `http://localhost:3001`
 - `POST /api/raters/{slug}/calculate` - execute saved rater
 - `POST /api/templates/{name}/calculate` - execute template
 - `GET /api/records` - list execution snapshots
+
+## Docker Containerization (Windows Containers)
+
+This project supports containerized execution via **Windows Docker Containers**. The Docker build uses `windowsservercore` and installs headless Microsoft Excel (via the Office Deployment Tool) to support Excel COM automation (`win32com`) inside the container.
+
+> **Prerequisites for Docker**:
+> - Docker Desktop for Windows installed
+> - Docker Desktop switched to **Switch to Windows containers...** mode (Right-click Docker tray icon -> Switch to Windows containers)
+
+### 1) Build the Image
+```powershell
+docker build -t rater-engine .
+```
+
+### 2) Run via Docker Compose
+```powershell
+docker compose up -d
+```
+
+### 3) Or Run via Docker CLI
+```powershell
+docker run -d --name rater-engine -p 8000:8000 rater-engine
+```
+
+- Backend API inside container: `http://localhost:8000`
+- Swagger UI inside container: `http://localhost:8000/docs`
+
+---
 
 ## ⚠️ Troubleshooting & Common COM Errors
 Because this engine physically drives the Microsoft Excel desktop application in the background, you may run into environment-specific COM errors (like `0x800A03EC` or `Missing active Excel worker`) when cloning to a brand new machine.
@@ -164,3 +198,4 @@ On some Windows OS builds, the COM automation service explicitly requires system
 * **Fix:** Create these two empty folders manually via File Explorer:
   - `C:\Windows\System32\config\systemprofile\Desktop`
   - `C:\Windows\SysWOW64\config\systemprofile\Desktop`
+

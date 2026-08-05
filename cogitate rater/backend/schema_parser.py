@@ -120,6 +120,10 @@ def _parse_io_schema(xlsx_path: Path) -> dict:
             "group": group_name,
         }
         
+        # Dual-Write Extension: Capture the deep injection coordinate if it's a valid remote cell ref
+        if original_source and isinstance(original_source, str) and "!" in original_source:
+            entry["original_source"] = str(original_source).strip()
+        
         if param_value is not None:
             entry["default"] = param_value
             
